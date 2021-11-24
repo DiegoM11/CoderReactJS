@@ -1,6 +1,6 @@
 import CartWidget from "./CartWidget";
 
-const NavBar = () => {
+function NavBar () {
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -12,13 +12,13 @@ const NavBar = () => {
           <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" href="#">Inicio</a>
+                <a className="nav-link active" href="/">Inicio</a>
               </li>
               <li className="nav-item">
-              <a className="nav-link active"  href="#">Productos</a>
+              <a className="nav-link active"  href="/">Productos</a>
               </li>
               <li className="nav-item">
-              <a className="nav-link active"  href="#">Contacto</a>
+              <a className="nav-link active"  href="/">Contacto</a>
               </li>
             </ul>
           </div>
