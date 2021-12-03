@@ -1,4 +1,5 @@
 import ItemCount from "./ItemCount";
+import { Link } from "react-router-dom";
 
 function Item({ item }) {
   return (
@@ -8,11 +9,14 @@ function Item({ item }) {
         <div class="card col-sm-4">
           <div className="card">
             <div className="card-body">
-              <h5 className="card-title">
-                  {item.id} - {item.title}
-              </h5>
-            </div>  
-              <ItemCount/>  
+              <Link to= {`/${item.id}`}>
+                <img src={item.pictureUrl} className="img-fluid" alt={item.title}/>
+              </Link>
+              <h5 className="card-title">{item.title}</h5>
+            </div>
+            <div className="card-footer">
+              <ItemCount/>
+            </div>
           </div>
         </div>
       </div>
