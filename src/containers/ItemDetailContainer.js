@@ -1,22 +1,28 @@
-import ItemDetail from "../components/ItemDetail";
+import ItemDetail from '../components/ItemDetail';
 import { useState, useEffect } from "react";
+import { getItem } from "../services/getItems";
+import { useParams } from "react-router-dom";
 
-function ItemDetailContainer() {  
-  const [item, setDetails] = useState([])
+const ItemDetailContainer = () => {
 
-  const promise = new Promise((resolve) => {
-    setTimeout(() => resolve(item), 2000);
-  });
-    
-  useEffect(() => {
-    promise.then((item) => setDetails(item))
-  }, [])
+  const {id} = useParams();
+  const [product, setProduct] = useState({})
+
+  useEffect( () => {
+      
+      (async () => {
+          const product = await getItem(id);
+          setProduct(product);
+      })()
+
+  }, [id])
+
+  
+  console.log(product);
 
   return (
-    <div>
-      <ItemDetail item={item}/>
-    </div>
-  );
+    <>{product.data !== undefined ? <ItemDetail product={product} /> : <div>Loading...</div>}</>
+  )
 }
 
-export default ItemDetailContainer;
+export default ItemDetailContainer

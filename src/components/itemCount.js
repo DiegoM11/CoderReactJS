@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-function ItemCount ({ initial = 0, stock = 25 }) {
+
+function ItemCount ({ initial = 0, stock = 25, handleAdd, handleBuy}) {
   const [contador, setContador] = useState(initial);
   const [nuevoStock = stock - (contador + 1), updateStock] = useState(stock);
   
@@ -11,16 +13,16 @@ function ItemCount ({ initial = 0, stock = 25 }) {
     if (simbolo === "+") {
       if (contador <= stock) {
         setContador(contador + 1);
-        const menosStock = nuevoStock - 1;
-        updateStock(menosStock);
-        console.log(menosStock);
+        const masStock = nuevoStock - 1;
+        updateStock(masStock);
+        console.log(masStock);
       }
     } else {
       if (contador > 0) {
         setContador(contador - 1);
-        const masStock = nuevoStock + 1;
-        updateStock(masStock);
-        console.log(masStock);;
+        const menosStock = nuevoStock + 1;
+        updateStock(menosStock);
+        console.log(menosStock);;
     }
     }
   };
@@ -47,11 +49,20 @@ function ItemCount ({ initial = 0, stock = 25 }) {
       </button>
       <button
         className="btn btn-primary"
-      //onClick={() => handleAdd()} //Faltaria agregar funcion para que ande
+        onClick={() => handleAdd(contador)} 
         disabled={contador === 0}
       >
-      Agregar
+      Agregar al carrito
       </button>
+      <Link to="/cart">
+      <button
+        className="btn btn-success"
+        //onClick={() => handleBuy()}
+        disabled={contador === 0}
+      >
+      Comprar
+      </button>
+      </Link>
     </div>
   );
 };

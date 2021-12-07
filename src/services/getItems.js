@@ -4,8 +4,8 @@ export const getItems = () => {
       fetch(`https://api.pokemontcg.io/v2/cards`)
       .then( res => res.json())
       .then( data => {
-          console.log(data.results);
-          acc(data.results);
+        acc(data);
+        console.log(data); 
       })
       .catch( err => {
           alert("Hubo un error: ", err.message)
@@ -14,16 +14,16 @@ export const getItems = () => {
   })
 }
 
-export const getItems = (id) => {
+export const getItem = (id) => {
 
   console.log(id);
 
   return new Promise ((acc, rej) => {
-      fetch(`https://api.pokemontcg.io/v2/cards${id}`)
+      fetch(`https://api.pokemontcg.io/v2/cards/${id}`)
       .then( res => res.json())
       .then( data => {
-          console.log(data.results);
           acc(data);
+          console.log(data); 
       })
       .catch( err => {
           alert("Hubo un error: ", err.message)
@@ -31,4 +31,5 @@ export const getItems = (id) => {
       })    
   })
 }
+
 
