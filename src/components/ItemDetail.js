@@ -21,17 +21,25 @@ function ItemDetail({product})  {
               <div className="card">
                 <div className="card-body">
                   {console.log(product)}
-                  <img src={product.data.images.small} className="img-fluid" alt={product.data.name} />
                   <h5 className="card-title">{product.data.name}</h5>
+                  <br/>
+                  <img src={product.data.images.small} className="img-fluid" alt={product.data.name} />
+                  <br/>
                   <div className="card-description">
-                    <p>
-                      <h6>Description</h6>
-                    </p>
+                    <br/>
+                    <ul>
+                      <li>{product.data.supertype}</li>
+                      <li>Subtype: {product.data.subtypes}</li>
+                      <li>Type: {product.data.types}</li>
+                      <li>Level: {product.data.level}</li>
+                    </ul>
                   </div>
                   <div className="card-price">
-                    <span>$</span> {product.data.tcgplayer.prices.holofoil.market}
+                    <span>Price: $</span> {product.data.tcgplayer.prices.holofoil.market}
                   </div>
+                  <br/>
                   <ItemCount handleAdd = {(cantidad) => handleAddToCart(cantidad)} />
+                  <br/>
                 </div>
               </div>
             </div>
