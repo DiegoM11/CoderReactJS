@@ -1,17 +1,23 @@
 import ItemCount from "./ItemCount";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
+
 
 
 function ItemDetail({product})  {
-  const [count, setCount] = useState(0);
-  const [isAdded, setIsAdded] = useState(false);
+  const {addToCart} = useContext(CartContext)
+  const [ isAdded, setIsAdded ] = useState(false);
 
-  const handleAddToCart = (cantidad) => {
-    setCount(cantidad);
-    setIsAdded(true);
-    console.log(isAdded);
-    console.log(count)
+  const handleBuy = () => {
+    addToCart(product)
   };
+
+
+  const handleAddToCart = () => {
+    setIsAdded(true);
+  }  
 
   return(
     <div className="item-detail">
@@ -20,7 +26,6 @@ function ItemDetail({product})  {
             <div class="card col-sm-4">
               <div className="card">
                 <div className="card-body">
-                  {console.log(product)}
                   <h5 className="card-title">{product.data.name}</h5>
                   <br/>
                   <img src={product.data.images.small} className="img-fluid" alt={product.data.name} />
@@ -35,11 +40,24 @@ function ItemDetail({product})  {
                     </ul>
                   </div>
                   <div className="card-price">
-                    <span>Price: $</span> {product.data.tcgplayer.prices.holofoil.market}
+                    <span>Price: $</span> {product.data.tcgplayer.prices.holofoil?.market}
                   </div>
                   <br/>
-                  <ItemCount handleAdd = {(cantidad) => handleAddToCart(cantidad)} />
+                  
                   <br/>
+                  { !isAdded ?
+                  <ItemCount                             
+                    handleAdd = {(cantidad) => handleAddToCart(cantidad)} 
+                  /> :
+                  <Link to="/cart">
+                    <button
+                      className="btn btn-success"
+                      onClick = {handleBuy}
+                    >
+                    Comprar
+                    </button>
+                  </Link> 
+                  }
                 </div>
               </div>
             </div>
@@ -50,6 +68,7 @@ function ItemDetail({product})  {
 }
 
 export default ItemDetail;
+
 
 
 

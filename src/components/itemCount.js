@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
 
-function ItemCount ({ initial = 0, stock = 25, handleAdd, handleBuy}) {
+
+function ItemCount ({ initial = 0, stock = 25, handleAdd}) {
   const [contador, setContador] = useState(initial);
   const [nuevoStock = stock - (contador + 1), updateStock] = useState(stock);
   
@@ -54,15 +54,6 @@ function ItemCount ({ initial = 0, stock = 25, handleAdd, handleBuy}) {
       >
       Agregar al carrito
       </button>
-      <Link to="/cart">
-      <button
-        className="btn btn-success"
-        //onClick={() => handleBuy()}
-        disabled={contador === 0}
-      >
-      Comprar
-      </button>
-      </Link>
     </div>
   );
 };

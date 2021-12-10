@@ -9,10 +9,12 @@ import { BrowserRouter as Router,
          Routes,
          Route
          } from 'react-router-dom';
+import { CartContextProvider } from './context/CartContext';
 
 const App = () => {
   return (
     <div className="App">
+    <CartContextProvider>
       <Router>
         <NavBar/>
         <Routes>
@@ -22,6 +24,7 @@ const App = () => {
           <Route path="/cart" element={<Cart/>}/>
         </Routes>
       </Router>
+    </CartContextProvider>
     </div>
   );
 }
