@@ -9,15 +9,16 @@ import { CartContext } from "../context/CartContext";
 function ItemDetail({product})  {
   const {addToCart} = useContext(CartContext)
   const [ isAdded, setIsAdded ] = useState(false);
+  
+  
+  const handleAddToCart = (cantidad) => {
+    console.log('aca recibi la cantidad: ', cantidad)
+    setIsAdded(cantidad);
+  }  
 
   const handleBuy = () => {
-    addToCart(product)
-  };
-
-
-  const handleAddToCart = () => {
-    setIsAdded(true);
-  }  
+    addToCart({...product.data, cantidad: isAdded})
+  }
 
   return(
     <div className="item-detail">
@@ -46,13 +47,13 @@ function ItemDetail({product})  {
                   
                   <br/>
                   { !isAdded ?
-                  <ItemCount                             
+                  <ItemCount
                     handleAdd = {(cantidad) => handleAddToCart(cantidad)} 
                   /> :
                   <Link to="/cart">
                     <button
                       className="btn btn-success"
-                      onClick = {handleBuy}
+                      onClick={handleBuy}
                     >
                     Comprar
                     </button>

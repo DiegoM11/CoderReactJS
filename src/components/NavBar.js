@@ -1,7 +1,12 @@
 import CartWidget from "./CartWidget";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 
 function NavBar () {
+
+  const { productsInCart } = useContext(CartContext);
+  
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -25,7 +30,11 @@ function NavBar () {
           </div>
         </div>
         <div className="d-flex">
+          <span style={{ color: "white" }}>
+            {productsInCart()}</span>
+          <Link to="/cart" className="ml-2">
           <CartWidget />
+          </Link>
         </div>
       </nav>
       <div>
