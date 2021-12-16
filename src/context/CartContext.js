@@ -10,8 +10,7 @@ export const CartContextProvider = ( {children} ) => {
     const addToCart = (product) => {
         setCart([...cart, product])
         saveCart(cart)
-      }
-    
+    }
 
     const emptyCart = () => {
         setCart([])
@@ -23,7 +22,7 @@ export const CartContextProvider = ( {children} ) => {
     }
 
     const totalAmount = () => {
-      return cart.reduce((acc, product) => acc + product.tcgplayer.prices.holofoil?.market * product.cantidad, 0)
+        return cart.reduce((acc, product) => acc + product.price * product.cantidad, 0)
     }
     
     const saveCart = () => {
@@ -35,7 +34,16 @@ export const CartContextProvider = ( {children} ) => {
         return cart.reduce((acc, product) => acc + product.cantidad, 0)
     }
 
+    /*function loadCart () {
+        const cart = JSON.parse(window.localStorage.getItem('cart'));
+        if (cart) {
+          setCart(cart);
+        }
+      }*/
 
+    
+    
+    
     console.log(cart)
 
     return (
@@ -46,7 +54,7 @@ export const CartContextProvider = ( {children} ) => {
             totalAmount,
             removeFromCart,
             saveCart,
-            productsInCart
+            productsInCart,
         }}>
             {children}
         </CartContext.Provider>

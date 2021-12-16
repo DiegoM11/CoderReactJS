@@ -1,7 +1,7 @@
 export const getItems = () => {
 
   return new Promise ((acc, rej) => {
-      fetch(`https://api.pokemontcg.io/v2/cards?pageSize=6`)
+      fetch(`https://api.pokemontcg.io/v2/cards?pageSize=12`)
       .then( res => res.json())
       .then( data => {
         acc(data);

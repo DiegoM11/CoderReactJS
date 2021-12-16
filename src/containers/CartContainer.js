@@ -8,7 +8,6 @@ const CartContainer = () => {
 
     const {cart, emptyCart, totalAmount} = useContext(CartContext)
 
-
     if (cart.length === 0) {
         return <div className="container my-5">
                     <h2>Carrito Vacio</h2>
@@ -16,7 +15,6 @@ const CartContainer = () => {
                     <Link to="/products" className="btn btn-primary">Volver</Link>
                 </div>
     }
-
 
     return (
         <div className="container my-5">

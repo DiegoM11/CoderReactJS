@@ -9,6 +9,8 @@ import { CartContext } from "../context/CartContext";
 function ItemDetail({product})  {
   const {addToCart} = useContext(CartContext)
   const [ isAdded, setIsAdded ] = useState(false);
+
+  const { cart } = useContext(CartContext);
   
   
   const handleAddToCart = (cantidad) => {
@@ -17,7 +19,16 @@ function ItemDetail({product})  {
   }  
 
   const handleBuy = () => {
-    addToCart({...product.data, cantidad: isAdded})
+    if(!isInCart(product.id)){
+      addToCart({...product, cantidad: isAdded})
+    }else{
+      console.log('ya esta en el carrito')
+      alert('ya esta en el carrito')
+    }
+  }
+
+  const isInCart = (id) => {
+    return cart.some(item => item.id === id)
   }
 
   return(
@@ -27,21 +38,16 @@ function ItemDetail({product})  {
             <div class="card col-sm-4">
               <div className="card">
                 <div className="card-body">
-                  <h5 className="card-title">{product.data.name}</h5>
+                  <h5 className="card-title">{product.name}</h5>
                   <br/>
-                  <img src={product.data.images.small} className="img-fluid" alt={product.data.name} />
+                  <img src={product.img} className="img-fluid" alt={product.name} />
                   <br/>
                   <div className="card-description">
                     <br/>
-                    <ul>
-                      <li>{product.data.supertype}</li>
-                      <li>Subtype: {product.data.subtypes}</li>
-                      <li>Type: {product.data.types}</li>
-                      <li>Level: {product.data.level}</li>
-                    </ul>
+                    <p className="card-text">{product.description}</p>
                   </div>
                   <div className="card-price">
-                    <span>Price: $</span> {product.data.tcgplayer.prices.holofoil?.market}
+                    <span>Price: $</span> {product.price}
                   </div>
                   <br/>
                   

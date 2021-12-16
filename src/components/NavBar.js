@@ -29,12 +29,15 @@ function NavBar () {
             </ul>
           </div>
         </div>
-        <div className="d-flex">
-          <span style={{ color: "white" }}>
-            {productsInCart()}</span>
-          <Link to="/cart" className="ml-2">
-          <CartWidget />
-          </Link>
+        <div className="d-flex flex-row-reverse">
+          <div className="p-2">  
+            <Link to="/cart" className="ml-2">
+              <CartWidget />
+            </Link>
+          </div>
+          <div className="p-2" style={{ color: "white" }}>
+            {productsInCart()}
+          </div>  
         </div>
       </nav>
       <div>

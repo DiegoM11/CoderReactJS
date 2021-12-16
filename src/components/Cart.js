@@ -15,7 +15,7 @@ export const Cart = (product) => {
             </div>
             <div class="col-2">
                 <div class="shopping-cart-price d-flex align-items-center h-100 border-bottom pb-2 pt-3">
-                    <p class="item-price mb-0">${product.tcgplayer.prices.holofoil?.market}</p>
+                    <p class="item-price mb-0">${product.price}</p>
                 </div>
             </div>
             <div class="col-2">
