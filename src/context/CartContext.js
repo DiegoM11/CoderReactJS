@@ -10,7 +10,7 @@ export const CartContextProvider = ( {children} ) => {
     const addToCart = (product) => {
         setCart([...cart, product])
         saveCart(cart)
-    }
+    }   
 
     const emptyCart = () => {
         setCart([])

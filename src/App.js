@@ -5,6 +5,7 @@ import Home from './containers/Home';
 import CartContainer from './containers/CartContainer';
 import ItemListContainer from './containers/ItemListContainer';
 import ItemDetailContainer from './containers/ItemDetailContainer';
+import { Checkout } from './components/Checkout';
 import { BrowserRouter as Router,
          Routes,
          Route
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/products" element={<ItemListContainer/>}/>
           <Route path="/product/:id" element={<ItemDetailContainer/>}/>
           <Route path="/cart" element={<CartContainer/>}/>
+          <Route path="/checkout" element={<Checkout/>}/>
         </Routes>
       </Router>
     </CartContextProvider>
