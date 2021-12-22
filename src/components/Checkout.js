@@ -1,7 +1,7 @@
 import React from "react";
 import { CartContext } from "../context/CartContext";
 import { useContext, useState } from "react";
-import { addDoc, collection, Timestamp } from "firebase/firestore/lite";
+import { addDoc, collection, Timestamp, writeBatch, getDocs, query, where, documentId } from "firebase/firestore/lite";
 import { db } from "../firebase/config";
 import { Link } from "react-router-dom";
 
@@ -11,11 +11,12 @@ export const Checkout = () => {
   const { cart, totalAmount, emptyCart } = useContext(CartContext);
 
   const [ orderId, setOrderId ] = useState('');
+  const [ loading, setLoading ] = useState(false);
 
   const [values, setValues] = useState({  
     nombre: "",
     email: "",
-    tel: "",
+    telefono: ""
 });
 
   const handleInputChange = (e) => {
@@ -25,7 +26,7 @@ export const Checkout = () => {
       ...values,
       [e.target.name]: e.target.value
 
-  })
+    })
   }
 
 
@@ -33,20 +34,63 @@ export const Checkout = () => {
     e.preventDefault()
 
     const order = {
-    buyer: values,
-    items: cart,
-    total: totalAmount(),
-    date: Timestamp.fromDate(new Date()),
+      buyer: values,
+      items: cart,
+      total: totalAmount(),
+      date: Timestamp.fromDate(new Date())
+    }
+
+
+  const batch = writeBatch(db);
+  const ordersRef = collection(db, "orders")
+  const productosRef = collection(db, "productos")
+  const q = query(productosRef, where(documentId(), 'in', cart.map(product => product.id)))
+  
+  const outOfStock = []
+
+  setLoading(true)
+  getDocs(q)
+   .then((res) => {
+        res.docs.forEach((doc) => {
+          const itemInCart = cart.find((item) => item.id === doc.id)
+
+          if (doc.data().stock >= itemInCart.cantidad) {
+            batch.update(doc.ref, {
+              stock: doc.data().stock - itemInCart.cantidad
+            })
+
+          } else {
+            outOfStock.push(itemInCart)
+          }
+        })
+
+        if (outOfStock.length === 0) {
+          addDoc(ordersRef, order)
+          .then((res) => {
+            batch.commit()
+            setOrderId(res.id)
+            emptyCart()
+            setLoading(false)
+          })
+          } else {
+          alert(`No hay suficiente stock para los siguientes productos: ${outOfStock.map(item => item.name).join(', ')}`)
+          setLoading(false)
+        }
+      })
   }
 
-  const ordersRef = collection(db, "orders")
 
-  addDoc(ordersRef, order)
-  .then((res) => {
-    setOrderId(res.id)
-    emptyCart()
-  })
-  };
+      
+  if (loading) {
+    return (
+      <div className="text-center">
+        <h1>Procesando pedido...</h1>
+        <div className="spinner-border" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="container my-5">
@@ -57,10 +101,9 @@ export const Checkout = () => {
             <h1>Compra realizada!</h1>
             <hr/>
             <p>Numero de order: {orderId}</p>
-            <Link to="/" className="btn btn-primary">Volver</Link>
+            <Link to="/" className="btn btn-primary my-2">Volver</Link>
          </>
           : <>
-      
       <h2>Checkout</h2>
       <hr/>
       <form onSubmit={handleSubmit}>
@@ -91,7 +134,7 @@ export const Checkout = () => {
       <button type="submit" className="btn btn success">Enviar</button>
       </form>
       </>
-}
+      }
     </div>
   );
 };
