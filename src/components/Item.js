@@ -4,7 +4,7 @@ const Item = ({ product }) => {
   return (
           <div class="col">
             <div class="card">
-                <img src={product.img} className="img-thumbnai" alt={product.name}/>            
+                <img style={{width: 250, height: 250, alignSelf: "center"}} src={product.img} className="img-thumbnai" alt={product.name}/>            
                 <div class="card-body">
                   <h5 class="card-title">{product.name}</h5>
                   <p class="card-text">${product.price}</p>

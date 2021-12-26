@@ -14,10 +14,8 @@ const ItemListContainer = () => {
 
     setLoading(true);
 
-    //Armar la referencia a la colección de productos
     const productosRef = collection(db, 'productos');
 
-    //Obtener los productos
     getDocs(productosRef)
       .then( (snapshot) => {
         const productos = snapshot.docs.map( (doc) => ({
@@ -25,18 +23,11 @@ const ItemListContainer = () => {
           ...doc.data()       
         }) 
         )
-        console.log(productos);
         setItems(productos);
       })
       .finally( () => {
         setLoading(false);
       })
-    
-      /*(async () => {
-        const { data } = await getItems();
-        setItems(data);
-        console.log(data);
-      })();*/
   }, []);
 
   return (

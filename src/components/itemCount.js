@@ -9,20 +9,17 @@ function ItemCount ({ initial = 0, stock = 25, handleAdd}) {
 
 
   const handleOp = (simbolo) => {
-    console.log(simbolo);
     if (simbolo === "+") {
       if (contador <= stock) {
         setContador(contador + 1);
         const masStock = nuevoStock - 1;
         updateStock(masStock);
-        console.log(masStock);
       }
     } else {
       if (contador > 0) {
         setContador(contador - 1);
         const menosStock = nuevoStock + 1;
         updateStock(menosStock);
-        console.log(menosStock);;
     }
     }
   };

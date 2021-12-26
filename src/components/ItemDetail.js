@@ -8,14 +8,13 @@ import { CartContext } from "../context/CartContext";
 
 
 function ItemDetail({product})  {
-  const {addToCart} = useContext(CartContext)
+  
   const [ isAdded, setIsAdded ] = useState(false);
 
-  const { cart } = useContext(CartContext);
+  const { addToCart, isInCart, editCount } = useContext(CartContext);
   
   
   const handleAddToCart = (cantidad) => {
-    console.log('aca recibi la cantidad: ', cantidad)
     setIsAdded(cantidad);
   }  
 
@@ -23,15 +22,11 @@ function ItemDetail({product})  {
     if(!isInCart(product.id)){
       addToCart({...product, cantidad: isAdded})
     }else{
-      const nuevaCantidad = cart.find(item => item.id === product.id).cantidad;
-      console.log('nueva cantidad: ', nuevaCantidad)
-      addToCart({...product, cantidad: nuevaCantidad + isAdded})
+      editCount(product.id, isAdded)
     }
   }
 
-  const isInCart = (id) => {
-    return cart.some(item => item.id === id)
-  }
+
 
   return(
     <div className="item-detail">

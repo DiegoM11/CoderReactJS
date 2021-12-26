@@ -11,6 +11,7 @@ import { BrowserRouter as Router,
          Route
          } from 'react-router-dom';
 import { CartContextProvider } from './context/CartContext';
+import Footer from './components/Footer';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="/cart" element={<CartContainer/>}/>
           <Route path="/checkout" element={<Checkout/>}/>
         </Routes>
+        <Footer/>
       </Router>
     </CartContextProvider>
     </div>

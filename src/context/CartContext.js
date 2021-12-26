@@ -10,7 +10,12 @@ export const CartContextProvider = ( {children} ) => {
     const addToCart = (product) => {
         setCart([...cart, product])
         saveCart(cart)
-    }   
+    }  
+    
+    const editCount = ( id, cantidad) => {
+        let nuevoArray = cart.map(item => item.id === id ? {...item, cantidad: cantidad} : item )
+        setCart(nuevoArray)
+    }
 
     const emptyCart = () => {
         setCart([])
@@ -27,25 +32,16 @@ export const CartContextProvider = ( {children} ) => {
     
     const saveCart = () => {
         window.localStorage.setItem('cart', JSON.stringify(cart));
-        console.log('cart saved')
       }
 
     const productsInCart = (cantidad) => {
         return cart.reduce((acc, product) => acc + product.cantidad, 0)
     }
 
-    /*function loadCart () {
-        const cart = JSON.parse(window.localStorage.getItem('cart'));
-        if (cart) {
-          setCart(cart);
-        }
-      }*/
-
+    const isInCart = (id) => {
+        return cart.some(item => item.id === id)
+      }
     
-    
-    
-    console.log(cart)
-
     return (
         <CartContext.Provider value={{
             cart,
@@ -55,6 +51,8 @@ export const CartContextProvider = ( {children} ) => {
             removeFromCart,
             saveCart,
             productsInCart,
+            editCount,
+            isInCart,
         }}>
             {children}
         </CartContext.Provider>

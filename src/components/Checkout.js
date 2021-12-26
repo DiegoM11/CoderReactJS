@@ -20,7 +20,6 @@ export const Checkout = () => {
 });
 
   const handleInputChange = (e) => {
-    console.log(e.target.name)
 
     setValues({
       ...values,
